@@ -6,7 +6,7 @@ COPY . .
 RUN dotnet build "WebApplication2.csproj" -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish "WebApplication2.csproj" -c Release -r linux-musl-x64 -o /app
+RUN dotnet publish "WebApplication2.csproj" -c Release -o /app
 
 #Angular build
 FROM node as nodebuilder
@@ -42,4 +42,4 @@ WORKDIR /app
 COPY --from=publish /app .
 RUN mkdir -p /app/ClientApp/dist
 COPY --from=nodebuilder /usr/src/app/dist/. /app/ClientApp/dist/
-ENTRYPOINT ["./ClientApp/dist"]
+ENTRYPOINT ["dotnet", "WebApplication2.dll"]
