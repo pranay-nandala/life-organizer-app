@@ -42,4 +42,4 @@ WORKDIR /app
 COPY --from=publish /app .
 RUN mkdir -p /app/ClientApp/dist
 COPY --from=nodebuilder /usr/src/app/dist/. /app/ClientApp/dist/
-ENTRYPOINT ["dotnet", "WebApplication2.dll"]
+ENTRYPOINT ["./ClientApp/dist"]
