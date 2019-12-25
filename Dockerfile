@@ -6,7 +6,7 @@ COPY . .
 RUN dotnet build "WebApplication2.csproj" -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish "WebApplication2.csproj" -c Release -o /app
+RUN dotnet publish "WebApplication2.csproj" -c Release -r linux-musl-x64 -o /app
 
 #Angular build
 FROM node as nodebuilder
