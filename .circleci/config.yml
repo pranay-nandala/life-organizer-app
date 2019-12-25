@@ -1,8 +1,7 @@
 version: 2
 jobs:
  build:
-   docker:
-     - image: circleci/node:8-browsers
+   machine: true
    steps:
      - checkout 
 
