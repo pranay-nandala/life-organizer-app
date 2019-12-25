@@ -3,11 +3,15 @@ WORKDIR /app
 EXPOSE 80
 
 FROM microsoft/dotnet:2.1-sdk AS build
-WORKDIR /src
-COPY ["WebApplication1.csproj", ""]
-RUN dotnet restore "WebApplication1.csproj"
+WORKDIR /app
+
+# copy csproj and restore as distinct layers
+COPY *.sln .
+COPY *.csproj ./
+RUN dotnet restore
+
 COPY . .
-WORKDIR "/src/"
+WORKDIR /app
 RUN dotnet build "WebApplication1.csproj" -c Release -o /app
 
 FROM build AS publish
