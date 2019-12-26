@@ -6,12 +6,13 @@ FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
 COPY *.sln ./
 COPY ./WebApplication2.csproj ./
-RUN dotnet restore "WebApplication2.csproj"
+#RUN dotnet restore "WebApplication2.csproj"
 COPY . .
 WORKDIR /src
 RUN dotnet build "WebApplication2.csproj" -c Release -o /app
 
 FROM build AS publish
+RUN dotnet publish "WebApplication2.csproj" -c Release -o /l/linux -r linux-x64
 RUN dotnet publish "WebApplication2.csproj" -c Release -o /app
 
 #Angular build
