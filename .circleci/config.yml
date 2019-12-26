@@ -8,7 +8,7 @@ jobs:
      # build image
      - run: |         
          docker info
-         docker build -t aspnetapp -f WebApplication3/Dockerfile .
+         docker build -t aspnetapp -f WebApplication4/Dockerfile .
 
      # deploy the image
      - run: |         
