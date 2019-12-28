@@ -1,6 +1,7 @@
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 WORKDIR /app
 EXPOSE 80
+
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
 COPY *.sln ./
@@ -11,7 +12,6 @@ WORKDIR /src
 RUN dotnet build "WebApplication2.csproj" -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish -c Release -o /app
 RUN dotnet publish "WebApplication2.csproj" -c Release -o /app
 
 #Angular build
@@ -29,9 +29,9 @@ RUN npm install -g @angular/cli@1.7.0 --unsafe
 COPY ClientApp/. /usr/src/app
 RUN npm run build
 #End Angular build
+
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /l/linux/libuv.so .
 COPY --from=publish /app .
 RUN mkdir -p /app/ClientApp/dist
 COPY --from=nodebuilder /usr/src/app/dist/. /app/ClientApp/dist/
