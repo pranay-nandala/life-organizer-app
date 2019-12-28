@@ -5,14 +5,12 @@ EXPOSE 80
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
 COPY *.sln ./
-COPY ./WebApplication2.csproj ./
-#RUN dotnet restore "WebApplication2.csproj"
+COPY ./WebApplication2.csproj ./RUN dotnet restore "WebApplication2.csproj"
 COPY . .
 WORKDIR /src
 RUN dotnet build "WebApplication2.csproj" -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish "WebApplication2.csproj" -c Release -o /l/linux -r linux-x64
 RUN dotnet publish "WebApplication2.csproj" -c Release -o /app
 
 #Angular build
@@ -41,7 +39,6 @@ RUN npm run build
 
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /l/linux/libuv.so .
 COPY --from=publish /app .
 RUN mkdir -p /app/ClientApp/dist
 COPY --from=nodebuilder /usr/src/app/dist/. /app/ClientApp/dist/
