@@ -7,11 +7,10 @@ jobs:
 
      # build image
      - run: |         
-       docker build -t aspnetapp -f $(Build.SourcesDirectory)/Dockerfile .
+         docker build -t aspnetapp -f $(Build.SourcesDirectory)/Dockerfile .
 
      # deploy the image
-     - run: |         
-       docker build -t aspnetapp -f $(Build.SourcesDirectory)/Dockerfile .
-       docker login --username=$(USERNAME) --password=$(API_KEY) lifeorganizer.azurecr.io
-       docker tag aspnetapp lifeorganizer.azurecr.io/$(APP_NAME)/web
-       docker push lifeorganizer.azurecr.io/$(APP_NAME)/web
+     - run: |
+         docker login --username=$(USERNAME) --password=$(API_KEY) lifeorganizer.azurecr.io
+         docker tag aspnetapp lifeorganizer.azurecr.io/$(APP_NAME)/web
+         docker push lifeorganizer.azurecr.io/$(APP_NAME)/web
